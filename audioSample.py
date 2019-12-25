@@ -2,7 +2,7 @@ import wave
 import pyaudio
 
 
-filename = "voice/hi.wav"
+filename = "voice/orokana.wav"
 
 wf = wave.open(filename, 'rb')
 
@@ -23,5 +23,3 @@ while data != '':
     data = wf.readframes(chunk)
 stream.close()
 p.terminate()
-
-exit()
