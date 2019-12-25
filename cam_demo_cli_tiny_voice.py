@@ -2,7 +2,6 @@ from __future__ import division
 import time
 from util import *
 from darknet import Darknet
-import random
 import argparse
 import pickle as pkl
 from voice import Player
@@ -39,33 +38,20 @@ def prep_img(image, inpDim):
     return img_, origIm, dimension
 
 
-def write(x, image):
-    c1 = tuple(x[1:3].int())
-    c2 = tuple(x[3:5].int())
+def write(x):
     cls = int(x[-1])
     label = "{0}".format(classes[cls])
-#     color = random.choice(colors)
-#     cv2.rectangle(image, c1, c2, color, 1)
-    t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 1, 1)[0]
-    c2 = c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4
-#     cv2.rectangle(image, c1, c2, color, -1)
-#     cv2.putText(image, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225, 255, 255], 1)
-
-    print(label, c1, c2)
-
-#     return image
-
-
-def write_cli(x):
-    # c1 = tuple(x[1:3].int())
-    # c2 = tuple(x[3:5].int())
-    c1 = x[1:3]
-    c2 = x[3:5]
-    cls = int(x[-1])
-    label = "{0}".format(classes[cls])
-    print(label, c1, c2)
-    # if label == "person":
-    #     oroka.play()
+    if label == "person":
+        c1 = x[1:3].int()
+        c2 = x[3:5].int()
+        c1 = c1.numpy()
+        c2 = c2.numpy()
+        x = c1[0] + c2[0]
+        y = c1[1] + c2[1]
+        c = ((y-x)**2)**(1/2)
+        print(label, c)
+        if c < 100:
+            oroka.play()
 
 
 def arg_parse():
@@ -150,7 +136,7 @@ if __name__ == '__main__':
             classes = load_classes('data/coco.names')
             colors = pkl.load(open("pallete", "rb"))
 
-            list(map(lambda x: write_cli(x), output))
+            list(map(lambda x: write(x), output))
 
             frames += 1
         else:
