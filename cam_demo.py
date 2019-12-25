@@ -48,6 +48,9 @@ def write(x, image):
     c2 = c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4
     cv2.rectangle(image, c1, c2, color, -1)
     cv2.putText(image, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225, 255, 255], 1)
+
+    print(label, c1, c2)
+
     return image
 
 
@@ -149,7 +152,7 @@ if __name__ == '__main__':
             if key & 0xFF == ord('q'):
                 break
             frames += 1
-            print("FPS of the video is {:5.2f}".format(frames / (time.time() - start)))
+            # print("FPS of the video is {:5.2f}".format(frames / (time.time() - start)))
 
 
         else:
