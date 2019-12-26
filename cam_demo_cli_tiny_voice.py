@@ -50,8 +50,8 @@ def write(x):
         y = c1[1] + c2[1]
         c = ((y-x)**2)**(1/2)
         print(label, c)
-        if c < 100:
-            oroka.play()
+        # if c < 100:
+        #     oroka.play()
 
 
 def arg_parse():
